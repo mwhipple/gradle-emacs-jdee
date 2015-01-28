@@ -1,0 +1,11 @@
+//This file allows the project build script to be able to apply the plugin from source
+sourceSets {
+  main {
+    groovy {
+      srcDirs = ['../src/main/groovy']
+    }
+    resources {
+      srcDirs = ['../src/main/resources']
+    }
+  }
+}

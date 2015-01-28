@@ -1,0 +1,55 @@
+plugins {
+  id "com.jfrog.bintray" version "1.0"
+}
+
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven-publish'
+apply plugin: 'groovy'
+
+apply plugin: 'com.mattwhipple.emacs-jdee'
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      artifact sourcesJar {
+	classifier 'sources'
+      }
+      artifact javadocJar {
+	classifier 'javadoc'
+      }
+    }
+  }
+}
+
+artifacts {
+  archives sourcesJar, javadocJar
+}
+
+bintray {
+  user = bintrayUser
+  key = bintrayKey
+  publications = ['mavenJava']
+  pkg {
+    repo = 'gradle'
+    name = 'gradle-emacs-jdee'
+    licenses = ['GPL-3.0']
+    
+    websiteUrl = 'https://github.com/mwhipple/gradle-emacs-jdee'
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion='2.2.1'
+}

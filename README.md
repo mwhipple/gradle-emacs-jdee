@@ -4,7 +4,7 @@ gradle-emacs-jdee
 Overview
 ---
 
-A Gradle plugin to generate a `prj.el` file for use wth [[JDEE][http://jdee.sourceforge.net/]] in Emacs.
+A Gradle plugin to generate a `prj.el` file for use wth (JDEE)[http://jdee.sourceforge.net/] in Emacs.
 
 This will start as a copy of the code posted on http://ignatyev-dev.blogspot.com/2013/07/gradle-projects-in-jdee.html packaged as a proper plugin and made available on the Plugins portal, and then evolve to follow best practices and cover new needs.
 

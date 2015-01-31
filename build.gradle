@@ -1,53 +1,30 @@
 plugins {
-  id "com.jfrog.bintray" version "1.0"
+  id 'nu.studer.plugindev' version '1.0.3'
 }
 
 apply plugin: 'java-gradle-plugin'
-apply plugin: 'maven-publish'
 apply plugin: 'groovy'
-
 apply plugin: 'com.mattwhipple.emacs-jdee'
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from javadoc.destinationDir
-}
-
-publishing {
-  publications {
-    mavenJava(MavenPublication) {
-      from components.java
-
-      artifact sourcesJar {
-	classifier 'sources'
-      }
-      artifact javadocJar {
-	classifier 'javadoc'
-      }
-    }
-  }
-}
-
-artifacts {
-  archives sourcesJar, javadocJar
+plugindev {
+  pluginId='com.mattwhipple.emacs-jdee'
+  pluginImplementationClass 'com.mattwhipple.gradle.JdeePlugin'
+  pluginDescription 'Gradle plugin to generate JDEE prj.el file for emacs'
+  pluginLicenses 'GPL-3.0'
+  pluginTags 'gradle', 'plugin', 'emacs'
+  authorId 'mwhipple'
+  authorName 'Matt Whipple'
+  authorEmail 'matt@mattwhipple.com'
+  projectUrl 'https://github.com/mwhipple/gradle-emacs-jdee'
+  projectInceptionYear '2015'
+  done()
 }
 
 bintray {
   user = bintrayUser
-  key = bintrayKey
-  publications = ['mavenJava']
-  pkg {
-    repo = 'gradle'
-    name = 'gradle-emacs-jdee'
-    licenses = ['GPL-3.0']
-    
-    websiteUrl = 'https://github.com/mwhipple/gradle-emacs-jdee'
-  }
+  key = bintrayApiKey
+  pkg.repo = 'gradle'
+
 }
 
 task wrapper(type: Wrapper) {

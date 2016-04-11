@@ -1,32 +1,35 @@
-plugins {
-  id 'nu.studer.plugindev' version '1.0.3'
-}
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.4"
+}   }
 
-apply plugin: 'java-gradle-plugin'
-apply plugin: 'groovy'
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+}
+apply plugin: "com.gradle.plugin-publish"
 apply plugin: 'com.mattwhipple.emacs-jdee'
 
-plugindev {
-  pluginId='com.mattwhipple.emacs-jdee'
-  pluginImplementationClass 'com.mattwhipple.gradle.JdeePlugin'
-  pluginDescription 'Gradle plugin to generate JDEE prj.el file for emacs'
-  pluginLicenses 'GPL-3.0'
-  pluginTags 'gradle', 'plugin', 'emacs'
-  authorId 'mwhipple'
-  authorName 'Matt Whipple'
-  authorEmail 'matt@mattwhipple.com'
-  projectUrl 'https://github.com/mwhipple/gradle-emacs-jdee'
-  projectInceptionYear '2015'
-  done()
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
 }
 
-bintray {
-  user = bintrayUser
-  key = bintrayApiKey
-  pkg.repo = 'gradle'
+pluginBundle {
+    website = 'https://github.com/mwhipple/gradle-emacs-jdee'
+    vcsUrl = 'https://github.com/mwhipple/gradle-emacs-jdee'
+    description = 'Gradle plugin to generate JDEE prj.el file for emacs'
+    tags = ['emacs']
 
-}
+    plugins {
+        emacsJdeePlugin {
+            id = 'com.mattwhipple.emacs-jdee'
+            displayName = 'Emacs JDEE Plugin'
+}   }   }
 
 task wrapper(type: Wrapper) {
-  gradleVersion='2.2.1'
+    gradleVersion='2.12'
 }
